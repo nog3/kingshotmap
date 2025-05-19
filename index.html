@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kingshot World Map</title>
+
+  <style>
+    html,body { width:100%; height:100%; margin:0; padding:0; }
+#map { width:100%; height:100%; }
+.myDivIcon {
+  text-align: center;
+  /* Horizontally center the text (icon) */
+  line-height: 80px;
+  /* Vertically center the text (icon) */
+//  border: dashed; border-radius: 100%;
+//  background: white;
+}
+.sanctuary { color: grey; }
+.castle { color: gold; }
+.fortress {  color: gold; }
+/*
+.arsenal { color: red; }
+.armory { color: brown; }
+
+
+.drill { color: yellow; }
+.builders {  color: skyblue; }
+.harvest { color: white; }
+.foragers { color: hotpink; }
+.lodge { color: darkblue; }
+.scholars { color: orange; }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+<script src="
+https://cdn.jsdelivr.net/npm/leaflet-search@4.0.0/dist/leaflet-search.src.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/leaflet-search@4.0.0/dist/leaflet-search.src.min.css
+" rel="stylesheet">
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+
+
+
+
+// set default zoom level and center point
+var coords = [600, 600];
+var zoomLevel = 0;
+var bounds = [[0,0], [1200,1200]];
+
+// Declare map.
+
+var map = L.map('map', {
+  crs: L.CRS.Simple,
+  minZoom: -1,
+}).setView(coords, zoomLevel);
+
+// Define an on-click marker.
+
+var markerOptions = {
+  draggable: false
+}
+
+map.on("click", function (e){
+  var marker = new L.Marker([e.latlng.lat, e.latlng.lng], markerOptions).addTo(map);
+})
+
+// Declare featuregroup layers, overlay map and icon > featuregroup layer.
+
+var armoryLayer = L.featureGroup().addTo(map);
+var arsenalLayer = L.featureGroup().addTo(map);
+var buildersLayer = L.featureGroup().addTo(map);
+var castleLayer = L.featureGroup().addTo(map);
+var drillLayer = L.featureGroup().addTo(map);
+var foragersLayer = L.featureGroup().addTo(map);
+var fortressLayer = L.featureGroup().addTo(map);
+var harvestLayer = L.featureGroup().addTo(map);
+var lodgeLayer = L.featureGroup().addTo(map);
+var sanctuaryLayer = L.featureGroup().addTo(map);
+var scholarsLayer = L.featureGroup().addTo(map);
+
+var baseMaps = {};
+
+var overlays = {
+  "Armory": armoryLayer,
+  "Arsenal": arsenalLayer,
+  "Builder's Guild": buildersLayer,
+  "Castle": castleLayer,  
+  "Drill Camp": drillLayer,
+  "Forager's Grove": foragersLayer,
+  "Fortress": fortressLayer,  
+  "Frontier Lodge": lodgeLayer,
+  "Harvest Altar": harvestLayer,
+  "Sanctuary": sanctuaryLayer,
+  "Scholar's Tower": scholarsLayer
+}
+
+var layersmap = {
+  "armory": armoryLayer,
+  "arsenal": arsenalLayer,
+  "builders": buildersLayer,
+  "castle": castleLayer,
+  "drill": drillLayer,
+  "foragers": foragersLayer,
+  "fortress": fortressLayer,  
+  "lodge": lodgeLayer,
+  "harvest": harvestLayer,
+  "sanctuary": sanctuaryLayer,
+  "scholars": scholarsLayer
+}
+
+// Set up layer control.
+
+var layerControl = L.control.layers(baseMaps,overlays,{collapsed:false,position:'topleft'}).addTo(map);
+
+// BASE MAP DRAWING
+// Draw outer bounds.
+var polygon = L.polygon([
+    [0, -0],
+    [0, 1200],
+    [1200, 1200],
+    [1200, 0]
+], {color: 'darkolivegreen'}).addTo(map);
+
+// Draw plains boundary
+var polygon = L.polygon([
+    [300, 300],
+    [300, 899],
+    [899, 899],
+    [899, 300]
+], {color: 'green'}).addTo(map);
+
+// Draw fertile land
+var polygon = L.polygon([
+    [450, 450],
+    [450, 749],
+    [749, 749],
+    [749, 450]
+], {color: 'greenyellow'}).addTo(map);
+
+// Declare icon defs and mapping.
+
+const armory = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-shield-cross"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon armory'
+});
+
+const arsenal = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-shield-sword"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon arsenal'
+});
+
+const builders = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-hard-hat"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon builders'
+});
+
+const drill = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-train"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon drill'
+});
+
+const foragers = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-cart"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon foragers'
+});
+
+const fortress = L.divIcon({
+  html: '<span class="mdi mdi-36px mdi-chess-rook"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon fortress'
+});
+
+const lodge = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-greenhouse"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon lodge'
+});
+
+const harvest = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-barley"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon harvest'
+});
+
+const castle = L.divIcon({
+  html: '<span class="mdi mdi-48px mdi-castle"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon castle'
+});
+
+const sanctuary = L.divIcon({
+  html: '<span class="mdi mdi-36px mdi-shield-crown"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon sanctuary'
+});
+
+const scholars = L.divIcon({
+  html: '<span class="mdi mdi-24px mdi-bookshelf"></span>',
+  iconSize: [80,80],
+  className: 'myDivIcon scholars'
+});
+
+
+var iconmap = {
+  "armory": armory,
+  "arsenal": arsenal,
+  "builders": builders,
+  "castle": castle,
+  "drill": drill,
+  "foragers": foragers,
+  "fortress": fortress,  
+  "lodge": lodge,
+  "harvest": harvest,
+  "sanctuary": sanctuary,
+  "scholars": scholars
+}
+
+// Set-up tooltip, icon, layer group using onEachFeature
+
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.Type) {
+        layer.bindTooltip(feature.properties.Type + ' L' + feature.properties.level + '</br>X:' + feature.geometry.coordinates[0] + ' Y:' + feature.geometry.coordinates[1] + '</br>Buff: ' + feature.properties.buff);
+        layer.setIcon(iconmap[feature.properties.icon]);
+        layersmap[feature.properties.icon].addLayer(layer);
+    }
+}
+
+// Declare geojson features.
+
+var geojsonFeature = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          738,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          816,
+          717
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          537
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          768
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          438,
+          267
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          537,
+          1038
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          666,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          438
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          666
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 2,
+        "buff": "Troop DEF +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          387,
+          717
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 4,
+        "buff": "Troop DEF +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          588,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Armory",
+        "icon": "armory",
+        "level": 4,
+        "buff": "Troop DEF +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          438
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          366,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          438,
+          1068
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          867,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          867,
+          1068
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 2,
+        "buff": "Troop ATT +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          387,
+          486
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 4,
+        "buff": "Troop ATT +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          588,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 4,
+        "buff": "Troop ATT +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          816,
+          486
+        ]
+      },
+      "properties": {
+        "Type": "Arsenal",
+        "icon": "arsenal",  
+        "level": 4,
+        "buff": "Troop ATT +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          666
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          1038
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          537,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          567
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          327,
+          666
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 3,
+        "buff": "Construction Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          486,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 3,
+        "buff": "Construction Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          768,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 3,
+        "buff": "Construction Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          867,
+          567
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 3,
+        "buff": "Construction Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          666,
+          1068
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          1068
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Builder's Guild",
+        "icon": "builders",        
+        "level": 1,
+        "buff": "Construction Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          747
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          486,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          486,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          768,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          768,
+          1038
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          747
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          486
+        ]
+      },
+      "properties": {
+        "Type": "Drill Camp",
+        "icon": "drill",      
+        "level": 2,
+        "buff": "Training Speed + 5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          87,
+          666
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          267,
+          1068
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          537,
+          87
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          636,
+          1137
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          936
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1137,
+          567
+        ]
+      },
+      "properties": {
+        "Type": "Forager's Grove",
+        "icon": "foragers",      
+        "level": 1,
+        "buff": "Gathering Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          597,
+          800
+        ]
+      },
+      "properties": {
+        "Type": "Fortress 1",
+        "icon": "fortress",
+        "level": 4,
+        "buff": "Fortress"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          400,
+          597
+        ]
+      },
+      "properties": {
+        "Type": "Fortress 2",
+        "icon": "fortress",        
+        "level": 4,
+        "buff": "Fortress"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          597,
+          400
+        ]
+      },
+      "properties": {
+        "Type": "Fortress 3",
+        "icon": "fortress",        
+        "level": 4,
+        "buff": "Fortress"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          800,
+          597
+        ]
+      },
+      "properties": {
+        "Type": "Fortress 4",
+        "icon": "fortress",        
+        "level": 4,
+        "buff": "Fortress"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          327,
+          567
+        ]
+      },
+      "properties": {
+        "Type": "Frontier Lodge",
+        "icon": "lodge",
+        "level": 3,
+        "buff": "March Speed +15%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          486,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Frontier Lodge",
+        "icon": "lodge",
+        "level": 3,
+        "buff": "March Speed +15%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          768,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Frontier Lodge",
+        "icon": "lodge",
+        "level": 3,
+        "buff": "March Speed +15%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          867,
+          666
+        ]
+      },
+      "properties": {
+        "Type": "Frontier Lodge",
+        "icon": "lodge",
+        "level": 3,
+        "buff": "March Speed +15%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          327,
+          1038
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          769,
+          138
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          1068
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          747
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1068,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Harvest Altar",
+        "icon": "harvest",        
+        "level": 1,
+        "buff": "Resource Production Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          597,
+          597
+        ]
+      },
+      "properties": {
+        "Type": "King's Castle",
+        "icon": "castle",        
+        "level": 4,
+        "buff": "King"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          828
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 1",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          846,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 10",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          606,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 11",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          366,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 12",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          626
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 2",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          348
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 3",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          366,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 4",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          588,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 5",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          846,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 6",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          348
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 7",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          606
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 8",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          828
+        ]
+      },
+      "properties": {
+        "Type": "Sanctuary 9",
+        "icon": "sanctuary",
+        "level": 3,
+        "buff": "Sanctuary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53,
+          936
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          237,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          267,
+          537
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          666,
+          267
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          936,
+          537
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          237
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          327,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 3,
+        "buff": "Research Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          327,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 3,
+        "buff": "Research Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          867,
+          867
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 3,
+        "buff": "Research Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          867,
+          327
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 3,
+        "buff": "Research Speed +8%"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          957,
+          957
+        ]
+      },
+      "properties": {
+        "Type": "Scholar's Tower",
+        "icon": "scholars",        
+        "level": 1,
+        "buff": "Research Speed +5%"
+      }
+    }
+  ]
+}
+
+// Import features to map.
+
+L.geoJSON(geojsonFeature, {
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+
+
+
+  </script>
+</body>
+</html>
