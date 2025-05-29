@@ -187,7 +187,7 @@ var polygon = L.polygon([
 // Declare helper functions for updating the info pane.
 function highlightFeature(e) {
     var layer = e.target;
-    info.update(layer.feature.properties);
+    info.update(layer.feature.properties, layer.feature.geometry);
 }
 
 function resetHighlight(e) {
@@ -399,9 +399,9 @@ info.onAdd = function (map) {
 };
 
 // method that we will use to update the control based on feature properties passed
-info.update = function (props) {
+info.update = function (props,coords) {
     this._div.innerHTML = '<h4>Altar Details</h4>' +  (props ?
-        props.Type + ' L' + props.level + '</br>Buff: ' + props.buff + '<br />Held By:' + props.OWNER
+        props.Type + ' L' + props.level + '</br>X' + coords.coordinates[0] + ',Y' + coords.coordinates[1] + '<br />Buff: ' + props.buff + '<br />Held By:' + props.OWNER
         : 'Hover over an outpost');
 };
 
