@@ -43,7 +43,7 @@
     color: #777;
 }
 
-.GNG { border: 2px dashed red; background-color: rgba(255, 0, 0, 0.5); }
+.GnG { border: 2px dashed red; background-color: rgba(255, 0, 0, 0.5); }
 .REB { border: 2px dashed white; background-color: rgba(0, 0, 255, 0.5); color: white; }
 .NFG { border: 2px dashed white; background-color: rgba(0, 128, 0, 0.5); color: white; }
 .MAD { border: 2px dashed orange; background-color: rgba(255, 165, 0, 0.5); }
@@ -54,9 +54,9 @@
 .TRY { border: 2px dashed deeppink; background-color: rgba(255, 20, 147, 0.5); }
 .FSK { border: 2px dashed white; background-color: rgba(0, 0, 128, 0.5); color: white; }
 .SRS { border: 2px dashed white; background-color: rgba(210, 105, 30, 0.5); color: white; }
-.BOB { border: 2px dashed limegreen; background-color: rgba(50, 205, 50, 0.5); }
+.bob { border: 2px dashed limegreen; background-color: rgba(50, 205, 50, 0.5); }
 .BRZ { border: 2px dashed skyblue; background-color: rgba(135, 206, 235, 0.5); }
-.ASG { border: 2px dashed salmon; background-color: rgba(250, 128, 114, 0.5); }
+.MAd { border: 2px dashed salmon; background-color: rgba(250, 128, 114, 0.5); }
 .PHx { border: 2px dashed white; background-color: rgba(199, 21, 133, 0.5); color: white; }
 .TrY { border: 2px dashed white; background-color: rgba(0, 139, 139, 0.5); color: white; }
 
@@ -112,10 +112,10 @@ var map = L.map('map', {
         rotate: true,
         rotateControl: {
           closeOnZeroBearing: false,
-          // position: 'bottomleft',
+          position: 'bottomleft'
         },
         bearing: -45,
-            zoomControl: false
+        zoomControl: false
 
 }).setView(coords, zoomLevel);
 
@@ -228,7 +228,7 @@ function onEachFeature(feature, layer) {
             html: iconmap[feature.properties.icon],
             iconSize: [42,42],
             iconAnchor: [21,21],
-            className: 'myDivIcon ' + feature.properties.OWNER
+            className: 'myDivIcon ' + feature.properties.Owner
           })
           );
 //        layer.bindTooltip(feature.properties.Type + ' L' + feature.properties.level + '</br>X:' + feature.geometry.coordinates[0] + ' Y:' + feature.geometry.coordinates[1] + '</br>Buff: ' + feature.properties.buff + '<br />Held By:' + feature.properties.OWNER);
@@ -247,96 +247,97 @@ var geojsonFeature = {
 "type": "FeatureCollection",
 "name": "dataset",
 "features": [
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "GNG" }, "geometry": { "type": "Point", "coordinates": [ 738.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 816.0, 717.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 537.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 768.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "RED" }, "geometry": { "type": "Point", "coordinates": [ 438.0, 267.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 1038.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "PHx" }, "geometry": { "type": "Point", "coordinates": [ 666.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "DDK" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 438.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 666.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 4, "buff": "Troop DEF +8%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 387.0, 717.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Armory", "icon": "armory", "level": 4, "buff": "Troop DEF +8%", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 588.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 438.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "RED" }, "geometry": { "type": "Point", "coordinates": [ 366.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "FSK" }, "geometry": { "type": "Point", "coordinates": [ 438.0, 1068.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "PHx" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "SRS" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 1068.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 4, "buff": "Troop ATT +8%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 387.0, 486.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 4, "buff": "Troop ATT +8%", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 588.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Arsenal", "icon": "arsenal", "level": 4, "buff": "Troop ATT +8%", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 816.0, 486.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "BRZ" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 666.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "ASG" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 1038.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 567.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 666.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 567.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "GNG" }, "geometry": { "type": "Point", "coordinates": [ 666.0, 1068.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 1068.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 747.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "GNG" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "PHx" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "SRS" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 1038.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 747.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 486.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "BRZ" }, "geometry": { "type": "Point", "coordinates": [ 87.0, 666.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 267.0, 1068.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 87.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 636.0, 1137.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 936.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%", "OWNER": "TrY" }, "geometry": { "type": "Point", "coordinates": [ 1137.0, 567.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Fortress 1", "icon": "fortress", "level": 4, "buff": "Fortress", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 597.0, 800.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Fortress 2", "icon": "fortress", "level": 4, "buff": "Fortress", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 400.0, 597.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Fortress 3", "icon": "fortress", "level": 4, "buff": "Fortress", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 597.0, 400.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Fortress 4", "icon": "fortress", "level": 4, "buff": "Fortress", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 800.0, 597.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 567.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%", "OWNER": "PHx" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 666.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "FSK" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "RED" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 1038.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "PHx" }, "geometry": { "type": "Point", "coordinates": [ 769.0, 138.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "SRS" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 1068.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 747.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "King's Castle", "icon": "castle", "level": 4, "buff": "King", "OWNER": "KING" }, "geometry": { "type": "Point", "coordinates": [ 597.0, 597.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 1", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 828.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 10", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 846.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 11", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "GNG" }, "geometry": { "type": "Point", "coordinates": [ 606.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 12", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 366.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 2", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "FSK" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 606.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 3", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 348.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 4", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 366.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 5", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 588.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 6", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 846.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 7", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 348.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 8", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 606.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Sanctuary 9", "icon": "sanctuary", "level": 3, "buff": "Sanctuary", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 828.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Drill Camp", "icon": "drill", "level": 1, "buff": "Training Speed +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 487.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "MAD" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 957.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "GNG" }, "geometry": { "type": "Point", "coordinates": [ 267.0, 537.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "PHX" }, "geometry": { "type": "Point", "coordinates": [ 666.0, 267.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "TRY" }, "geometry": { "type": "Point", "coordinates": [ 936.0, 537.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 237.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%", "OWNER": "END" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%", "OWNER": "NFG" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 867.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%", "OWNER": "BOB" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 327.0 ] } },
-{ "type": "Feature", "properties": { "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%", "OWNER": "REB" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 957.0 ] } }
+{ "type": "Feature", "properties": { "Owner": "SRS", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 738.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 816.0, 717.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 537.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 768.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "RED", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 438.0, 267.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 1038.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHx", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 666.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "DDK", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 438.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Armory", "icon": "armory", "level": 2, "buff": "Troop DEF +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 666.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Armory", "icon": "armory", "level": 4, "buff": "Troop DEF +8%" }, "geometry": { "type": "Point", "coordinates": [ 387.0, 717.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Armory", "icon": "armory", "level": 4, "buff": "Troop DEF +8%" }, "geometry": { "type": "Point", "coordinates": [ 588.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 438.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "RED", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 366.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 438.0, 1068.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHx", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "GnG", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 1068.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Arsenal", "icon": "arsenal", "level": 2, "buff": "Troop ATT +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Arsenal", "icon": "arsenal", "level": 4, "buff": "Troop ATT +8%" }, "geometry": { "type": "Point", "coordinates": [ 387.0, 486.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Arsenal", "icon": "arsenal", "level": 4, "buff": "Troop ATT +8%" }, "geometry": { "type": "Point", "coordinates": [ 588.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Arsenal", "icon": "arsenal", "level": 4, "buff": "Troop ATT +8%" }, "geometry": { "type": "Point", "coordinates": [ 816.0, 486.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 666.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "FSK", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 1038.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 567.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 666.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Builder's Guild", "icon": "builders", "level": 3, "buff": "Construction Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 567.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "GnG", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 666.0, 1068.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 1068.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Builder's Guild", "icon": "builders", "level": 1, "buff": "Construction Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 747.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "FSK", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHx", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "SRS", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 1038.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 747.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Drill Camp", "icon": "drill", "level": 2, "buff": "Training Speed + 5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 486.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "BRZ", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 87.0, 666.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 267.0, 1068.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 87.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 636.0, 1137.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 936.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TrY", "Type": "Forager's Grove", "icon": "foragers", "level": 1, "buff": "Gathering Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1137.0, 567.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Fortress 1", "icon": "fortress", "level": 4, "buff": "Fortress" }, "geometry": { "type": "Point", "coordinates": [ 597.0, 800.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Fortress 2", "icon": "fortress", "level": 4, "buff": "Fortress" }, "geometry": { "type": "Point", "coordinates": [ 400.0, 597.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Fortress 3", "icon": "fortress", "level": 4, "buff": "Fortress" }, "geometry": { "type": "Point", "coordinates": [ 597.0, 400.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Fortress 4", "icon": "fortress", "level": 4, "buff": "Fortress" }, "geometry": { "type": "Point", "coordinates": [ 800.0, 597.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 567.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%" }, "geometry": { "type": "Point", "coordinates": [ 486.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHx", "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%" }, "geometry": { "type": "Point", "coordinates": [ 768.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Frontier Lodge", "icon": "lodge", "level": 3, "buff": "March Speed +15%" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 666.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "FSK", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 138.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "RED", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 1038.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHx", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 769.0, 138.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "SRS", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 1068.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 747.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Harvest Altar", "icon": "harvest", "level": 1, "buff": "Resource Production Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 1068.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "", "Type": "King's Castle", "icon": "castle", "level": 4, "buff": "King" }, "geometry": { "type": "Point", "coordinates": [ 597.0, 597.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAD", "Type": "Sanctuary 1", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 828.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Sanctuary 10", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 846.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "GnG", "Type": "Sanctuary 11", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 606.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Sanctuary 12", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 366.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "FSK", "Type": "Sanctuary 2", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 606.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Sanctuary 3", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 348.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Sanctuary 4", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 366.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Sanctuary 5", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 588.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Sanctuary 6", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 846.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Sanctuary 7", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 348.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Sanctuary 8", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 606.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Sanctuary 9", "icon": "sanctuary", "level": 3, "buff": "Sanctuary" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 828.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Drill Camp", "icon": "drill", "level": 1, "buff": "Training Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 487.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "FSK", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 237.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "MAd", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 267.0, 537.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "PHX", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 666.0, 267.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "TRY", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 936.0, 537.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 237.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "NFG", "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 327.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 867.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "bob", "Type": "Scholar's Tower", "icon": "scholars", "level": 3, "buff": "Research Speed +8%" }, "geometry": { "type": "Point", "coordinates": [ 867.0, 327.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "REB", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 957.0, 957.0 ] } },
+{ "type": "Feature", "properties": { "Owner": "END", "Type": "Scholar's Tower", "icon": "scholars", "level": 1, "buff": "Research Speed +5%" }, "geometry": { "type": "Point", "coordinates": [ 537.0, 936.0 ] } }
 ]
 }
 
@@ -345,7 +346,7 @@ var geojsonFeature = {
 L.geoJSON(geojsonFeature, {
     onEachFeature: onEachFeature
 }).addTo(map);
-
+map.compassBearing.disable();
 // Create legend + Layer Control
 var overLayers = [
 
@@ -395,7 +396,7 @@ var overLayers = [
   }        
   ]}   
 ];
-map.addControl( new L.Control.PanelLayers(baseMaps, overLayers,{position: 'topleft',collapsibleGroups: true}) );
+map.addControl( new L.Control.PanelLayers(baseMaps, overLayers,{position: 'topleft',collapsibleGroups: true,collapsed: false}) );
 
 // Create Info Pane.
 var info = L.control();
@@ -409,7 +410,7 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props,coords) {
     this._div.innerHTML = '<h4>Altar Details</h4>' +  (props ?
-        props.Type + ' L' + props.level + '</br>X' + coords.coordinates[0] + ',Y' + coords.coordinates[1] + '<br />Buff: ' + props.buff + '<br />Held By:' + props.OWNER
+        props.Type + ' L' + props.level + '</br>X' + coords.coordinates[0] + ',Y' + coords.coordinates[1] + '<br />Buff: ' + props.buff + '<br />Held By:' + props.Owner
         : 'Hover over an outpost');
 };
 
@@ -430,9 +431,9 @@ var legend = L.control({position: 'bottomright'});
     div.innerHTML += '<div class="legend-item"><div class="legend-box TRY"></div>TRY</div>'
     div.innerHTML += '<div class="legend-item"><div class="legend-box FSK"></div>FSK</div>'
     div.innerHTML += '<div class="legend-item"><div class="legend-box SRS"></div>SRS</div>'
-    div.innerHTML += '<div class="legend-item"><div class="legend-box BOB"></div>BOB</div>'
+    div.innerHTML += '<div class="legend-item"><div class="legend-box bob"></div>bob</div>'
     div.innerHTML += '<div class="legend-item"><div class="legend-box BRZ"></div>BRZ</div>'
-    div.innerHTML += '<div class="legend-item"><div class="legend-box ASG"></div>ASG</div>'
+    div.innerHTML += '<div class="legend-item"><div class="legend-box MAd"></div>MAd</div>'
     div.innerHTML += '<div class="legend-item"><div class="legend-box PHx"></div>PHx</div>'
     div.innerHTML += '<div class="legend-item"><div class="legend-box TrY"></div>TrY</div>'
     return div;
